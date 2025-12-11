@@ -1,72 +1,133 @@
-This is a Kotlin Multiplatform project targeting Android, Web, Desktop (JVM).
+# Gulf Coast Hazard Briefs – Kotlin Multiplatform App
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+A Kotlin Multiplatform (KMP) mobile + desktop + web app that automatically 
+collects NOAA / National Weather Service hazard data and generates a clean, 
+fast weekly hazard brief for the Texas Gulf Coast Region.
 
-### Build and Run Android Application
+This project is intended for:
+- 🌧️ Real-time multi-hazard data feeds
+- ⚠️ AI-generated key messages & risk summaries
+- 📅 One-tap Weekly Brief optimized for Red Cross workflows
+- 🔥 Shared logic across Android, iOS, Desktop, and Web
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
-
-### Build and Run Desktop (JVM) Application
-
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
-
-### Build and Run Web Application
-
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
-
-- for the Wasm target (faster, modern browsers):
-    - on macOS/Linux
-      ```shell
-      ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-      ```
-    - on Windows
-      ```shell
-      .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-      ```
-- for the JS target (slower, supports older browsers):
-    - on macOS/Linux
-      ```shell
-      ./gradlew :composeApp:jsBrowserDevelopmentRun
-      ```
-    - on Windows
-      ```shell
-      .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-      ```
+Built using **Kotlin Multiplatform + Compose Multiplatform**.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+## 📦 Project Structure
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack
-channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+This is a Kotlin Multiplatform project targeting **Android, Web, Desktop (JVM)**.
+composeApp/
+
+├─ commonMain/   # Shared Kotlin code for all targets
+├─ androidMain/  # Android-specific code
+├─ jvmMain/      # Desktop-specific code
+├─ wasmJsMain/   # Web (WASM) implementation
+└─ jsMain/       # Web (JS fallback)
+
+- `commonMain` contains logic shared by all platforms.
+- Platform folders (`androidMain`, `jvmMain`, etc.) hold platform-specific code.
+- Compose Multiplatform handles UI across all supported platforms.
+
+---
+
+## 🚀 Build & Run Instructions
+
+### **Android Application**
+To run the Android development build:
+
+**From IntelliJ:**  
+Use Run → select **composeApp (Android)** → launch on emulator or device.
+
+**From terminal (macOS/Linux):**
+
+./gradlew :composeApp:assembleDebug
+
+**From terminal (Windows):**
+
+.\gradlew.bat :composeApp:assembleDebug
+
+---
+
+### **Desktop (JVM) Application**
+
+**From IntelliJ:**  
+Choose the Desktop run configuration (`composeApp Desktop`).
+
+**From terminal (macOS/Linux):**
+
+./gradlew :composeApp:run
+
+**From terminal (Windows):**
+
+.\gradlew.bat :composeApp:run
+
+---
+
+### **Web Application (Compose Web)**
+
+#### Faster Web Target (WASM)
+**macOS/Linux:**
+
+./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+
+**Windows:**
+
+.\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
+
+#### JS Legacy Target
+**macOS/Linux:**
+
+./gradlew :composeApp:jsBrowserDevelopmentRun
+
+**Windows:**
+
+.\gradlew.bat :composeApp:jsBrowserDevelopmentRun
+
+---
+
+## 🛠 Tech Stack
+
+- **Kotlin Multiplatform**
+- **Compose Multiplatform** (Android, Desktop, Web)
+- **Coroutines + StateFlow**
+- **Gradle Kotlin DSL**
+- **Material 3 UI**
+
+---
+
+## 🧭 Roadmap
+
+### Phase 1 — Foundation ✔️
+- Initialize KMP project
+- Android & Desktop builds working
+- Emulator configuration
+- GitHub setup
+
+### Phase 2 — Data Pipeline (Next)
+- Integrate NOAA/NWS hazard feeds  
+- Parse CAP XML + API feeds  
+- Build hazard models & risk filters  
+
+### Phase 3 — Weekly Brief UI
+- Home screen  
+- Risk score cards  
+- Auto-generated “Key Messages”  
+
+### Phase 4 — Export & Sharing
+- PDF / Image export  
+- “One-tap weekly brief” view  
+
+---
+
+## 📢 Support & Community  
+Interested in KMP or Compose Multiplatform?
+
+- Join Slack: **#compose-web**
+- Report issues on YouTrack
+
+---
+
+## 📝 License  
+This project is licensed under the MIT License.  
+See the **LICENSE** file for details.
