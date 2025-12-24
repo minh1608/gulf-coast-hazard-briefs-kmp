@@ -2,10 +2,13 @@ package com.example.gulf_coast_hazard_briefs_kmp.data.nws
 
 import com.example.gulf_coast_hazard_briefs_kmp.data.nws.dto.NwsForecastDto
 import com.example.gulf_coast_hazard_briefs_kmp.domain.ForecastDay
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+
+private fun parseLocalDateFromStartTime(startTime: String?): LocalDate? {
+    // Example: "2025-12-12T06:00:00-06:00"
+    val datePart = startTime?.take(10) ?: return null
+    return runCatching { LocalDate.parse(datePart) }.getOrNull()
+}
 
 internal fun periodsToForecastDays(
     periods: List<NwsForecastDto.Period>
@@ -14,14 +17,7 @@ internal fun periodsToForecastDays(
     val byDate: Map<LocalDate, List<NwsForecastDto.Period>> =
         periods
             .mapNotNull { p ->
-                val iso = p.startTime ?: return@mapNotNull null
-
-                val date = runCatching {
-                    Instant.parse(iso)
-                        .toLocalDateTime(TimeZone.UTC)
-                        .date
-                }.getOrNull() ?: return@mapNotNull null
-
+                val date = parseLocalDateFromStartTime(p.startTime) ?: return@mapNotNull null
                 date to p
             }
             .groupBy({ it.first }, { it.second })
@@ -30,21 +26,29 @@ internal fun periodsToForecastDays(
         .toSortedMap()
         .map { (date, ps) ->
 
-            val day = ps.firstOrNull {
-                !(it.name ?: "").contains("night", ignoreCase = true)
+            val day = ps.firstOrNull { p ->
+                val n = (p.name ?: "").lowercase()
+                !n.contains("night") && !n.contains("tonight")
             }
 
-            val night = ps.firstOrNull {
-                (it.name ?: "").contains("night", ignoreCase = true)
+            val night = ps.firstOrNull { p ->
+                val n = (p.name ?: "").lowercase()
+                n.contains("night") || n.contains("tonight")
             }
+
+            val fallback = ps.firstOrNull()
 
             ForecastDay(
                 date = date,
-                label = date.dayOfWeek.name.take(3), // MON / TUE
-                highF = day?.temperature,
-                lowF = night?.temperature,
-                shortForecast = day?.shortForecast ?: night?.shortForecast,
-                wind = day?.windSpeed ?: night?.windSpeed
+                high = day?.temperature ?: fallback?.temperature,
+                low = night?.temperature,
+                pop = day?.probabilityOfPrecipitation?.value
+                    ?: night?.probabilityOfPrecipitation?.value
+                    ?: fallback?.probabilityOfPrecipitation?.value,
+                forecast = day?.shortForecast
+                    ?: night?.shortForecast
+                    ?: fallback?.shortForecast
+                // 🚫 NO hazard here
             )
         }
 }

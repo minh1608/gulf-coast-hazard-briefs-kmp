@@ -4,9 +4,9 @@ import kotlinx.datetime.LocalDate
 
 data class ForecastDay(
     val date: LocalDate,
-    val label: String,              // e.g., "Mon"
-    val highF: Int? = null,
-    val lowF: Int? = null,
-    val shortForecast: String? = null,
-    val wind: String? = null
+    val high: Int? = null,
+    val low: Int? = null,
+    val pop: Int? = null,
+    val forecast: String? = null,
+    val hazard: HazardLevel = HazardLevel.NONE
 )

@@ -1,3 +1,9 @@
-# Contest Essay
+I am a Master of Data Science student with experience building data-driven systems and volunteering with humanitarian and community-focused organizations. Through this work, I have seen how critical timely, understandable information is during weather-driven events, especially in regions that face recurring hazards. The Texas Gulf Coast is one such region, frequently impacted by storms, heavy rainfall, flooding, and temperature extremes.
 
-This essay will be completed in Step 7.
+While NOAA and the National Weather Service (NWS) provide high-quality and authoritative weather data, that information is often distributed across technical products designed for meteorologists. Emergency planners, volunteers, and responders frequently need to synthesize forecasts, alerts, and hazard signals quickly, without the time or expertise required to interpret raw data feeds. This gap between data availability and practical decision-making motivated the creation of Gulf Coast Hazard Briefs.
+
+This project is a Kotlin Multiplatform application that automatically collects real NWS forecast and alert data and transforms it into a structured, weekly multi-hazard briefing. The app applies rule-based hazard detection and risk scoring to identify significant weather signals, then generates human-readable key messages organized into clear briefing pages. Each page is designed to answer practical questions: what is happening, where it may occur, when it is expected, and what impacts to anticipate.
+
+Technically, the project is built using Kotlin Multiplatform with Compose Multiplatform for the user interface and Ktor for networking. All data ingestion, hazard rules, and briefing logic live in shared Kotlin code, allowing the same hazard engine to power both the Android and Desktop applications. This architecture reduces duplication and improves consistency across platforms.
+
+The impact of this project lies in its focus on clarity and reuse. By converting complex weather data into concise, decision-ready summaries, the app supports safer planning and response workflows and can be extended to additional hazard types or regions in the future.

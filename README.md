@@ -1,133 +1,202 @@
-# Gulf Coast Hazard Briefs – Kotlin Multiplatform App
+🌧️ Gulf Coast Hazard Briefs
 
-A Kotlin Multiplatform (KMP) mobile + desktop + web app that automatically 
-collects NOAA / National Weather Service hazard data and generates a clean, 
-fast weekly hazard brief for the Texas Gulf Coast Region.
+A Kotlin Multiplatform Weekly Weather Briefing App for Humanitarian Use
 
-This project is intended for:
-- 🌧️ Real-time multi-hazard data feeds
-- ⚠️ AI-generated key messages & risk summaries
-- 📅 One-tap Weekly Brief optimized for Red Cross workflows
-- 🔥 Shared logic across Android, iOS, Desktop, and Web
+Gulf Coast Hazard Briefs is a Kotlin Multiplatform (KMP) application that automatically collects National Weather Service (NWS) data and generates a clear, multi-page weekly hazard brief for the Texas Gulf Coast Region.
 
-Built using **Kotlin Multiplatform + Compose Multiplatform**.
+The app is designed for humanitarian and emergency workflows — such as emergency planning, volunteer coordination, and situational awareness — where fast, readable summaries matter more than raw meteorological charts.
 
----
+Built once, shared everywhere: Android + Desktop (JVM), with an experimental Web preview.
 
-## 📦 Project Structure
+⸻
 
-This is a Kotlin Multiplatform project targeting **Android, Web, Desktop (JVM)**.
+✨ What This Project Does
+•	Fetches real NWS forecast and alert data
+•	Applies rule-based hazard logic in shared Kotlin code
+•	Automatically generates a multi-page weekly brief
+•	Presents the same brief consistently on Android and Desktop
+•	Optimized for quick review, not expert interpretation
+
+Current Pages
+
+Page 1 — Weekly Overview
+Forecast timeline, temperature ranges, precipitation chances, and confidence
+
+Page 2 — Active Hazard Spotlight
+What / Where / When / Impacts + recommended actions
+
+Page 3 — Flooding & Rainfall Context
+External map previews (WPC, radar, graphical forecast) with safe fallbacks
+
+⸻
+
+🧠 Why It Matters
+
+During severe or complex weather weeks, responders often need to answer:
+•	What’s the main risk this week?
+•	Where should we pay attention?
+•	What actions should we take now?
+
+This project turns raw weather data into human-readable briefings, reducing cognitive load and making it easier for non-meteorologists to act quickly and confidently.
+
+⸻
+
+📸 Screenshots
+
+Below are screenshots from both Android and Desktop builds, demonstrating that the same shared hazard engine produces identical weekly briefs across platforms.
+
+Page 1 — Weekly Overview
+
+Android
+screenshots/page1_overview_android.png
+
+Desktop
+screenshots/page1_overview_desktop.png
+
+⸻
+
+Page 2 — Active Hazard (Convective Weather)
+
+Android
+screenshots/page2_convective_android.png
+
+Desktop
+screenshots/page2_convective_desktop.png
+
+⸻
+
+Page 3 — Maps & Context (Flooding / Reference)
+
+Android
+screenshots/page3_map_android.png
+
+Desktop
+screenshots/page3_map_desktop.png
+
+⸻
+
+🧩 Project Architecture
+
+This is a Kotlin Multiplatform project with shared logic and platform-specific UIs.
+
 composeApp/
+commonMain/     Shared hazard logic, models, brief builder
+androidMain/    Android-specific UI & integrations
+jvmMain/        Desktop (JVM) UI
+wasmJsMain/     Experimental Web (WASM)
+jsMain/         JS fallback
+•	commonMain contains the hazard engine, rules, and page models
+•	All platforms use the same BriefBuilder
+•	Compose Multiplatform renders UI consistently across targets
 
-├─ commonMain/   # Shared Kotlin code for all targets
-├─ androidMain/  # Android-specific code
-├─ jvmMain/      # Desktop-specific code
-├─ wasmJsMain/   # Web (WASM) implementation
-└─ jsMain/       # Web (JS fallback)
+⸻
 
-- `commonMain` contains logic shared by all platforms.
-- Platform folders (`androidMain`, `jvmMain`, etc.) hold platform-specific code.
-- Compose Multiplatform handles UI across all supported platforms.
+🛠 Tech Stack
+•	Kotlin Multiplatform
+•	Compose Multiplatform (Android + Desktop)
+•	Ktor Client (multiplatform networking)
+•	kotlinx.serialization (JSON parsing)
+•	kotlinx.coroutines (async logic)
+•	Gradle Kotlin DSL
+•	Material 3 UI
 
----
+⸻
 
-## 🚀 Build & Run Instructions
+🚀 Build & Run Instructions
 
-### **Android Application**
-To run the Android development build:
+Android Application
 
-**From IntelliJ:**  
-Use Run → select **composeApp (Android)** → launch on emulator or device.
+From IntelliJ:
+Run → select composeApp (Android) → launch on emulator or device.
 
-**From terminal (macOS/Linux):**
-
+From terminal (macOS / Linux):
 ./gradlew :composeApp:assembleDebug
 
-**From terminal (Windows):**
-
+From terminal (Windows):
 .\gradlew.bat :composeApp:assembleDebug
 
----
+⸻
 
-### **Desktop (JVM) Application**
+Desktop (JVM) Application
 
-**From IntelliJ:**  
-Choose the Desktop run configuration (`composeApp Desktop`).
+From IntelliJ:
+Run the Desktop configuration.
 
-**From terminal (macOS/Linux):**
-
+From terminal (macOS / Linux):
 ./gradlew :composeApp:run
 
-**From terminal (Windows):**
-
+From terminal (Windows):
 .\gradlew.bat :composeApp:run
 
----
+⸻
 
-### **Web Application (Compose Web)**
+🧪 How to Try It
+1.	Launch the app
+2.	Tap Refresh
+3.	Review:
+•	Weekly Overview (Page 1)
+•	Active Hazard Page (e.g., Convective Weather)
+•	Weekly Brief navigation
 
-#### Faster Web Target (WASM)
-**macOS/Linux:**
+⸻
 
-./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+🗺 Roadmap (High-Level)
 
-**Windows:**
+Phase 1 — Foundation (Completed)
+•	Kotlin Multiplatform setup
+•	Android + Desktop builds
+•	Shared architecture
 
-.\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
+Phase 2 — Hazard Logic & Weekly Brief (Completed)
+•	NWS data ingestion
+•	Hazard rules & scoring
+•	Multi-page briefing UI
 
-#### JS Legacy Target
-**macOS/Linux:**
+Phase 3 — Polish & Extensions (Future)
+•	Additional hazard types (heat, flooding, etc.)
+•	Exportable brief formats (PDF / text)
+•	Expanded regional support
 
-./gradlew :composeApp:jsBrowserDevelopmentRun
+⸻
 
-**Windows:**
+📚 Data Sources
+•	National Weather Service (NWS)
+•	Forecast API
+•	Alerts API
+•	Optional external references:
+•	WPC rainfall outlooks
+•	NWS radar and graphical forecasts
 
-.\gradlew.bat :composeApp:jsBrowserDevelopmentRun
+See docs/DATA_SOURCES.md for details.
 
----
+⸻
 
-## 🛠 Tech Stack
+📝 License
 
-- **Kotlin Multiplatform**
-- **Compose Multiplatform** (Android, Desktop, Web)
-- **Coroutines + StateFlow**
-- **Gradle Kotlin DSL**
-- **Material 3 UI**
+This project is licensed under the MIT License.
+See the LICENSE file for details.
 
----
+⸻
 
-## 🧭 Roadmap
+🧩 Coding Style & Conventions
 
-### Phase 1 — Foundation ✔️
-- Initialize KMP project
-- Android & Desktop builds working
-- Emulator configuration
-- GitHub setup
+This project follows the official Kotlin Coding Conventions, including:
+•	Clear package structure (data, domain, logic, brief)
+•	Data classes for models and sealed classes for page types
+•	Explicit null-safety and coroutine-based async design
+•	Shared logic written once and reused across platforms
 
-### Phase 2 — Data Pipeline (Next)
-- Integrate NOAA/NWS hazard feeds  
-- Parse CAP XML + API feeds  
-- Build hazard models & risk filters  
+The goal is to keep the hazard engine readable, testable, and idiomatic for Kotlin Multiplatform.
 
-### Phase 3 — Weekly Brief UI
-- Home screen  
-- Risk score cards  
-- Auto-generated “Key Messages”  
+⸻
 
-### Phase 4 — Export & Sharing
-- PDF / Image export  
-- “One-tap weekly brief” view  
+📄 Essay
 
----
+A short project essay is available at:
 
-## 📢 Support & Community  
-Interested in KMP or Compose Multiplatform?
+essay/ESSAY.md
 
-- Join Slack: **#compose-web**
-- Report issues on YouTrack
-
----
-
-## 📝 License  
-This project is licensed under the MIT License.  
-See the **LICENSE** file for details.
+It covers:
+•	Motivation and humanitarian context
+•	Technical decisions
+•	Impact and future directions
