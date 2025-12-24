@@ -1,0 +1,14 @@
+package com.example.gulf_coast_hazard_briefs_kmp.data.http
+
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.java.Java
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
+
+actual fun createHttpClient(): HttpClient =
+    HttpClient(Java) {
+        install(ContentNegotiation) {
+            json(Json { ignoreUnknownKeys = true })
+        }
+    }
